@@ -1,0 +1,143 @@
+---
+name: "Citrix Image IOC Checks"
+checks:
+  - check: timestomp
+    confidence: medium
+    args:
+      paths:
+        - /
+      known_paths: []
+
+  - check: webshell
+    confidence: medium
+    args:
+      suspicious_contents:
+        - array_filter(
+        - base64_decode(
+        - eval($_
+        - http_status_code(
+      paths:
+        - /var
+      known_paths:
+        - /var/netscaler/gui/admin_ui/
+        - /var/netscaler/websocketd/
+      permission_confidence: medium
+
+  - check: suspicious_content
+    confidence: high
+    args:
+      checks:
+        - name: nsconfig
+          suspicious_contents:
+            - python3 -c
+            - httpd.conf
+            - fnoc.dptth
+            - index.php
+            - php.xedni
+            - relacsten
+            - zlib.decompress
+            - base64.b85decode
+            - base64.b64decode
+            - /var/tmp/sh
+            - hs/pmt/rav/
+            - apachectl graceful
+            - lufecarg ltcehcapa
+            - tnioPnogoL
+            - gifnocsn
+            - regex:#[\s]*php_flag engine off
+          paths:
+            - /nsconfig/
+            - /etc/
+          known_paths:
+            - /etc/rc
+            - /etc/rc.conf.defaults
+
+  - check: yara
+    confidence: high
+    args:
+      rule_files:
+        - ./yara/thor-webshells.yar
+        - ./yara/php_webshell_rules.yara
+      paths:
+        - /var
+      max_file_size_kb: 1024
+
+  - check: crontab
+    confidence: high
+    args:
+      suspicious_contents:
+        ip_address: '([0-9]{1,3}\.){3}[0-9]{1,3}'
+        /var/tmp: /var/tmp
+        nobody_user: nobody
+
+  - check: binaries
+    confidence: medium
+    args:
+      known_suid_binaries:
+        - /bin/mount
+        - /bin/ping
+        - /bin/ping6
+        - /bin/su
+        - /bin/umount
+        - /lib64/dbus-1/dbus-daemon-launch-helper
+        - /netscaler/ping
+        - /netscaler/ping6
+        - /netscaler/traceroute
+        - /netscaler/traceroute6
+        - /opt/likewise/bin/ksu
+        - /sbin/mksnap_ffs
+        - /sbin/mount.nfs
+        - /sbin/mount.nfs4
+        - /sbin/pam_timestamp_check
+        - /sbin/poweroff
+        - /sbin/shutdown
+        - /sbin/umount.nfs
+        - /sbin/umount.nfs4
+        - /sbin/unix_chkpwd
+        - /usr/bin/at
+        - /usr/bin/atq
+        - /usr/bin/atrm
+        - /usr/bin/chage
+        - /usr/bin/chfn
+        - /usr/bin/chsh
+        - /usr/bin/crontab
+        - /usr/bin/gpasswd
+        - /usr/bin/lock
+        - /usr/bin/login
+        - /usr/bin/newgrp
+        - /usr/bin/passwd
+        - /usr/bin/sg
+        - /usr/bin/staprun
+        - /usr/bin/su
+        - /usr/bin/sudo
+        - /usr/bin/sudoedit
+        - /usr/bin/yppasswd
+        - /usr/libexec/openssh/ssh-keysign
+        - /usr/libexec/ssh-keysign
+        - /usr/sbin/ping6
+        - /usr/sbin/userhelper
+        - /usr/sbin/usernetctl
+      known_guid_binaries:
+        - /usr/bin/netstat
+        - /usr/bin/wall
+        - /usr/bin/write
+
+  - check: known_bad_files
+    confidence: high
+    args:
+      files: []
+
+  - check: magic_bytes
+    confidence: medium
+    args:
+      paths:
+        - /
+      suspicious_bytes:
+        pcap_microsecond: d4c3 b2a1
+        pcap_nanosecond: 4d3c b2a1
+
+  - check: core_dump
+    confidence: medium
+    args:
+      extract: true
+      creation_date_threshold: 2025-05-01
