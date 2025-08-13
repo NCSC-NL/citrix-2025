@@ -1,4 +1,4 @@
-# Detection Script for Citrix Netscaler appliances
+# Detection Script for Citrix NetScaler appliances
 ## Author: NCSC-NL
 
 ### Disclaimer
