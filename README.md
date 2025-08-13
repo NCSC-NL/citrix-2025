@@ -17,6 +17,11 @@ This repository contains 3 sets of scripts, each script has it's own folder with
 2. disk-image-checks, these scritps will check for any indicators on disk images of netscaler appliances.
 3. live-host-bash-check, this script will check for any indicators on a running netscaler appliance.
 
+
+### Versions
+
+- live-host-bash-check: 1.8.2
+
 ### Instructions
 Run all the check scripts on backups, coredumps, and netscaler appliances.
 Share the logfile with your  national cyber security incident response entity (CSIRT) such as a NCSC or Govcert for further assistance, for EU: https://csirtsnetwork.eu
