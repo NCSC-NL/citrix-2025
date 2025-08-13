@@ -14,9 +14,9 @@ to your national cybersecurity entity (national CSIRT or otherwise).
 ### Instructions
 The check script looks for specific files on a netscaler environment that give indication for compromise. 
 For usage, refer to the instructions below:
-1. Upload the detection script `TLPCLEAR_check_script_cve-2025-6543-v1.7.sh` to a directory on your netscaler appliance such as /tmp (e.g. using the scp command)
+1. Upload the detection script `TLPCLEAR_check_script_cve-2025-6543-v1.8.sh` to a directory on your netscaler appliance such as /tmp (e.g. using the scp command)
 2. Open a (SSH) shell to the appliance and navigate to the directory containing the detection script
-3. Run the script as follows: `/bin/sh TLPCLEAR_check_script_cve-2025-6543-v1.7.sh`
+3. Run the script as follows: `/bin/sh TLPCLEAR_check_script_cve-2025-6543-v1.8.sh`
 4. Transfer the following file from the netscaler: `/var/log/custom_checks.log`
 5. Inspect the logfile for output. Everything not marked as a "low confidence indicator" should be considered an indicator of compromise and followed up on immediately. 
 6. Share the logfile with your  national cyber security incident response entity (CSIRT) such as a NCSC or Govcert for further assistance, for EU: https://csirtsnetwork.eu
