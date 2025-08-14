@@ -78,13 +78,11 @@ Version 1.0; released by NCSC-NL (https://www.ncsc.nl/actueel/nieuws/2025/07/22/
 
 ### Using `uv`
 Using `uv` to run the script is recommended. Read how to install `uv` [here](https://docs.astral.sh/uv/getting-started/installation/).
- 
- <!-- - Run from remote: -->
-   <!-- TODO update once on git -->
-    <!-- - `uvx --from git+https://<repo>@main run-checks --help` -->
- - Or, clone the repo and run
-    - `uv venv && source .venv/bin/active && uv sync --frozen`
-    - `uv run run-checks -h`
+
+Clone the repo, and run
+  - `cd disk-image-checks`
+  - `uv venv && source .venv/bin/active && uv sync --frozen`
+  - `uv run run-checks -h`
 
 #### Example
 Run all checks on an image
@@ -95,16 +93,11 @@ Run with only the webshells check
 
 ### 'plain' python
 (optional) create a venv (python3.12):
-`python3 -m venv .venv`
-
-Activate
-`source .venv/bin/activate` or on windows: `source .venv/Scripts/activate`
-
-Install dependencies
-`python3 -m pip install .`
-
-Run the script
-`python3 src/cli.py TARGETS [TARGETS ...]`
+- `cd disk-image-checks`
+- `python3 -m venv .venv`
+- `source .venv/bin/activate` or on windows: `source .venv/Scripts/activate`
+- `python3 -m pip install .`
+- `python3 src/cli.py TARGETS [TARGETS ...]`
 
 ## Configuration
 Configuration is handled in a yaml `CONFIG_FILE` (default `checks.yaml`)

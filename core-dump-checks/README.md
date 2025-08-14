@@ -33,6 +33,6 @@ options:
   --organisation ORGANISATION
                         Your organisation name.
 
-Version 1.0; released by NCSC-NL (https://www.ncsc.nl/actueel/nieuws/2025/07/22/casus-citrix-kwetsbaarheid).
+Version 1.0.0; released by NCSC-NL (https://www.ncsc.nl/actueel/nieuws/2025/07/22/casus-citrix-kwetsbaarheid).
 ```
 

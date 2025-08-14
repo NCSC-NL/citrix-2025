@@ -19,7 +19,8 @@ This repository contains 3 sets of scripts, each script has it's own folder with
 
 
 ### Versions
-
+- core-dump-checks: 1.0.0
+- disk-image-checks: 1.0.0
 - live-host-bash-check: 1.8.2
 
 ### Instructions
