@@ -1,8 +1,10 @@
-# Citrix image-checks
-Python script to check citrix images for IOCs. Based on https://github.com/fox-it/citrix-netscaler-triage/blob/main/iocitrix.py.
+**<u>Disclaimer: This script is not meant to be run directly on the NetScaler itself! Please use it externally on another device</u>**
 
-## Creating Citrix Netscaler disk images
-Before you can run the checker you must first create disk images of your netscaler appliance(s).
+# Citrix image-checks
+Python script to check citrix images for IOCs. Based on https://github.com/fox-it/citrix-NetScaler-triage/blob/main/iocitrix.py.
+
+## Creating Citrix NetScaler disk images
+Before you can run the checker you must first create disk images of your NetScaler appliance(s).
 
 ### Non VPX/SDX/MPX disk images
 You can use native disk exports/memory snapshots from Hyper-V, Proxmox, VMware solutions.
@@ -20,7 +22,7 @@ The following commands can be used on a local linux machine to create disk of yo
 #### Create a disk image of the `/dev/da0` disk to your local machine
 
 ```shell 
-local ~ $ ssh nsroot@<YOUR-NETSCALER-IP> shell dd if=/dev/da0 bs=10M status=progress | tail -c +7 | head -c -6 > da0.img
+local ~ $ ssh nsroot@<YOUR-NetScaler-IP> shell dd if=/dev/da0 bs=10M status=progress | tail -c +7 | head -c -6 > da0.img
 ```
 
 Do note, that this can take some time to complete. Make sure you have enough disk space on the local machine. 
@@ -29,7 +31,7 @@ Also if you don't have `/dev/da0` it's most likely `/dev/ada0`, you can verify u
 
 #### Create a disk image of the `/dev/md0` disk to your local machine
 ```shell
-local ~ $ ssh nsroot@<YOUR-NETSCALER-IP> shell dd if=/dev/md0 bs=10M status=progress | tail -c +7 | head -c -6 > md0.img
+local ~ $ ssh nsroot@<YOUR-NetScaler-IP> shell dd if=/dev/md0 bs=10M status=progress | tail -c +7 | head -c -6 > md0.img
 ```
 
 **NOTE**: While it is recommended to create disk images of both `/dev/md0` and `/dev/da0`. Creating a disk image of `/dev/md0` is optional. This step could be skipped, though this can cause the checker to miss certains incicators of compromise.
@@ -56,7 +58,7 @@ This is the simplest/happy path guide on how to check your own images using this
 usage: run-checks [-h] [--organisation [ORGANISATION]] [--checks [CHECKS ...]] [--config [CONFIG_FILE]] [--log-level {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                   TARGETS [TARGETS ...]
 
-Analyze forensic images of Citrix Netscalers for IOCs related to CVE-2025-5349, CVE-2025-5777 and CVE-2025-6543.
+Analyze forensic images of Citrix NetScalers for IOCs related to CVE-2025-5349, CVE-2025-5777 and CVE-2025-6543.
 
 positional arguments:
   TARGETS               Target(s) to load. https://docs.dissect.tools/en/stable/advanced/targets.html#targets
