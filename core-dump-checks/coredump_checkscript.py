@@ -19,7 +19,7 @@ except ImportError:
         "or see https://yara.readthedocs.io/en/stable/gettingstarted.html"
     )
 
-SCRIPT_VERSION = "1.0"
+SCRIPT_VERSION = "1.0.0"
 HELP_URL = "https://www.ncsc.nl/actueel/nieuws/2025/07/22/casus-citrix-kwetsbaarheid"
 SUBMIT_URL = ""
 DEFAULT_CONTEXT_SIZE = 1024 * 4
