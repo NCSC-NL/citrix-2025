@@ -1,3 +1,6 @@
+> [!WARNING]
+> This script is not meant to be run directly on the NetScaler itself! Please run it externally on another system.
+
 # Citrix NetScaler coredump scan
 
 Scan Citrix NetScaler coredump file(s) for IOCs related to CVE-2025-5349, CVE-2025-5777 and CVE-2025-6543.
