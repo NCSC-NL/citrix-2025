@@ -1,6 +1,33 @@
 # Citrix image-checks
 Python script to check citrix images for IOCs. Based on https://github.com/fox-it/citrix-netscaler-triage/blob/main/iocitrix.py.
 
+## Creating Citrix Netscaler disk images
+Before you can run the checker you must first create disk images of your netscaler appliance(s).
+A Citrix NetScaler exposes two important block devices which can imaged for offline forensic analysis. These block device files can be found at the following paths:
+* `/dev/md0`: The disk that holds the root (`/`) directory. This is a RAM disk
+* `/dev/da0`: The disk that holds the `/var` and `/flash` directories. This is a persistent disk.
+
+The root directory (`/`) of Citrix NetScaler is a RAM disk, meaning that this is a volatile disk. This disk can be found at `/dev/md0` when the NetScaler is powered-on and running, and will be unavailable when the NetScaler is powered-off. The `/var` and `/flash` directories reside on the `/dev/da0` disk as two separate partitions and is persistent.
+
+The following commands can be used on a local linux machine to create disk of your NetScaler over SSH:
+
+#### Create a disk image of the `/dev/da0` disk to your local machine
+
+```shell 
+local ~ $ ssh nsroot@<YOUR-NETSCALER-IP> shell dd if=/dev/da0 bs=10M status=progress | tail -c +7 | head -c -6 > da0.img
+```
+
+Do note, that this can take some time to complete. Make sure you have enough disk space on the local machine. 
+A persistent disk can easily take up 20GB of space or more.
+Also if you don't have `/dev/da0` it's most likely `/dev/ada0`, you can verify using the `mount` or `gpart show` command.
+
+#### Create a disk image of the `/dev/md0` disk to your local machine
+```shell
+local ~ $ ssh nsroot@<YOUR-NETSCALER-IP> shell dd if=/dev/md0 bs=10M status=progress | tail -c +7 | head -c -6 > md0.img
+```
+
+**NOTE**: While it is recommended to create disk images of both `/dev/md0` and `/dev/da0`. Creating a disk image of `/dev/md0` is optional. This step could be skipped, though this can cause the checker to miss certains incicators of compromise.
+
 ## Checking your own images
 This is the simplest/happy path guide on how to check your own images using this check script. This guide assumes you run on a linux system. When running on Windows check the specifics in the Usage section below.
 
