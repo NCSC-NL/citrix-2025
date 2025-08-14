@@ -1,7 +1,10 @@
+> [!WARNING]
+> This script is not meant to be run directly on the NetScaler itself! Please run it externally on another system.
+
 # Citrix image-checks
 Python script to check citrix images for IOCs. Based on https://github.com/fox-it/citrix-netscaler-triage/blob/main/iocitrix.py.
 
-## Creating Citrix Netscaler disk images
+## Creating Citrix NetScaler disk images
 Before you can run the checker you must first create disk images of your netscaler appliance(s).
 
 ### Non VPX/SDX/MPX disk images
