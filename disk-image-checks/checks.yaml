@@ -52,6 +52,153 @@ checks:
             - /etc/rc
             - /etc/rc.conf.defaults
 
+        - name: portal_exfil
+          suspicious_contents:
+            # Loosen heads to also allow data: and blob: (no // for data:) and ports on host
+            - 'regex:<script[^>]+src=["''](https?|data|blob):'
+            - 'regex:fetch\(\s*["''](https?|data|blob):'
+            - regex:(?s)xmlhttprequest.*?open\([^,]+,\s*["']https?://
+            - regex:sendbeacon\(\s*["']https?://
+            - 'regex:new\s+image\(\)\.src\s*=\s*["''](https?|data|blob):'
+            - regex:on\w+\s*=\s*.*location\.(href|assign)\s*=["']https?://
+            - regex:postMessage\(
+            - regex:location\.(href|assign)\s*=
+            - regex:window\.location\s*=
+            - regex:(?:window|parent|top)\.location\s*=
+            - regex:(?:window|parent|top)\.location\.(href|assign)\s*=
+            - regex:new\s+WebSocket\(\s*["']wss?://
+            - regex:new\s+EventSource\(\s*["']https?://
+            - regex:navigator\.sendbeacon\(\s*["']https?://
+            - regex:navigator\.clipboard\.write(Text)?\(
+            - 'regex:fetch\(\s*`https?://'
+            - 'regex:(?s)xmlhttprequest.*?open\([^,]+,\s*`https?://'
+          paths:
+            - /var/netscaler/logon
+            - /var/netscaler/logon/LogonPoint
+            - /var/netscaler/logon/themes
+            - /var/vpn
+            - /var/netscaler/portal
+            - /netscaler/ns_gui/admin_ui
+            - /netscaler/ns_gui/vpn
+          known_paths: []
+          extensions:
+            - .html
+            - .xhtml
+            - .js
+          allowlist_patterns:
+            # Customize per org to reduce FPs
+            - regex:https?://(www\.)?google-analytics\.com
+            - regex:https?://(www\.)?googletagmanager\.com
+            - regex:https?://ajax\.googleapis\.com
+            - regex:https?://cdn\.jsdelivr\.net
+            - regex:https?://cdnjs\.cloudflare\.com
+            - regex:https?://code\.jquery\.com
+            - regex:https?://cdn\.bootstrapcdn\.com
+            - regex:https?://static\.hotjar\.com
+            - regex:https?://cdn\.segment\.com
+            - regex:https?://fonts\.googleapis\.com
+            - regex:https?://fonts\.gstatic\.com
+            - regex:https?://(www\.)?gstatic\.com
+            - regex:https?://use\.typekit\.net
+            - regex:https?://static\.cloudflareinsights\.com
+            - regex:https?://cdn\.cloudflare\.com
+            - regex:https?://ajax\.aspnetcdn\.com
+            - regex:https?://static-cdn\.resources\.citrix\.com
+            - regex:https?://login\.microsoftonline\.com
+            - regex:https?://aadcdn\.msftauth\.net
+            - regex:https?://(www\.)?okta\.com
+            - regex:https?://oktastatic\.com
+            - regex:https?://(www\.)?onelogin\.com
+            - regex:https?://(www\.)?auth0\.com
+            - regex:https?://(www\.)?pingidentity\.com
+            - regex:https?://(www\.)?pingone\.com
+        - name: portal_strings
+          suspicious_contents:
+            - regex:https?://[^"\s]+
+          paths:
+            - /var/netscaler/logon/themes
+          known_paths: []
+          extensions:
+            - .json
+          allowlist_patterns:
+            - regex:https?://(www\.)?google-analytics\.com
+            - regex:https?://(www\.)?googletagmanager\.com
+            - regex:https?://ajax\.googleapis\.com
+            - regex:https?://cdn\.jsdelivr\.net
+            - regex:https?://cdnjs\.cloudflare\.com
+            - regex:https?://code\.jquery\.com
+            - regex:https?://cdn\.bootstrapcdn\.com
+            - regex:https?://static\.hotjar\.com
+            - regex:https?://cdn\.segment\.com
+            - regex:https?://fonts\.googleapis\.com
+            - regex:https?://fonts\.gstatic\.com
+            - regex:https?://(www\.)?gstatic\.com
+            - regex:https?://use\.typekit\.net
+            - regex:https?://static\.cloudflareinsights\.com
+            - regex:https?://cdn\.cloudflare\.com
+            - regex:https?://ajax\.aspnetcdn\.com
+            - regex:https?://static-cdn\.resources\.citrix\.com
+            - regex:https?://login\.microsoftonline\.com
+            - regex:https?://aadcdn\.msftauth\.net
+            - regex:https?://(www\.)?okta\.com
+            - regex:https?://oktastatic\.com
+            - regex:https?://(www\.)?onelogin\.com
+            - regex:https?://(www\.)?auth0\.com
+            - regex:https?://(www\.)?pingidentity\.com
+            - regex:https?://(www\.)?pingone\.com
+        - name: portal_plugins
+          suspicious_contents:
+            - regex:<plugin[^>]+src=["']https?://[^"']+
+            - regex:\bsrc=["']https?://[^"']+
+          paths:
+            - /var/netscaler/logon/LogonPoint
+          known_paths: []
+          extensions:
+            - .xml
+          allowlist_patterns:
+            - regex:https?://(www\.)?google-analytics\.com
+            - regex:https?://(www\.)?googletagmanager\.com
+            - regex:https?://ajax\.googleapis\.com
+            - regex:https?://cdn\.jsdelivr\.net
+            - regex:https?://cdnjs\.cloudflare\.com
+            - regex:https?://code\.jquery\.com
+            - regex:https?://cdn\.bootstrapcdn\.com
+            - regex:https?://static\.hotjar\.com
+            - regex:https?://cdn\.segment\.com
+            - regex:https?://fonts\.googleapis\.com
+            - regex:https?://fonts\.gstatic\.com
+            - regex:https?://(www\.)?gstatic\.com
+            - regex:https?://use\.typekit\.net
+            - regex:https?://static\.cloudflareinsights\.com
+            - regex:https?://cdn\.cloudflare\.com
+            - regex:https?://ajax\.aspnetcdn\.com
+            - regex:https?://static-cdn\.resources\.citrix\.com
+            - regex:https?://login\.microsoftonline\.com
+            - regex:https?://aadcdn\.msftauth\.net
+            - regex:https?://(www\.)?okta\.com
+            - regex:https?://oktastatic\.com
+            - regex:https?://(www\.)?onelogin\.com
+            - regex:https?://(www\.)?auth0\.com
+            - regex:https?://(www\.)?pingidentity\.com
+            - regex:https?://(www\.)?pingone\.com
+
+        - name: rc_persistence
+          suspicious_contents:
+            - regex:python3?\s+-c
+            - regex:(curl|wget)[^\n]*\|\s*sh
+            - regex:touch\s+-t
+            - regex:nohup\s
+            - regex:screen\s
+            - regex:https?://
+            - regex:([^0-9]|^)([0-9]{1,3}\.){3}[0-9]{1,3}([^0-9]|$)
+          paths:
+            - /flash/nsconfig/rc.netscaler
+            - /etc/rc
+            - /etc/rc.conf
+            - /etc/rc.conf.local
+            - /etc/rc.local
+            - /etc/rc.d
+          known_paths: []
   - check: yara
     confidence: high
     args:
@@ -61,6 +208,70 @@ checks:
       paths:
         - /var
       max_file_size_kb: 1024
+
+  - check: recent_changes
+    confidence: medium
+    args:
+      paths:
+        - /var/netscaler/logon
+        - /var/netscaler/logon/LogonPoint
+        - /var/netscaler/logon/themes
+        - /var/vpn
+        - /var/netscaler/portal
+        - /netscaler/ns_gui/admin_ui
+        - /netscaler/ns_gui/vpn
+      days: 90
+      extensions:
+        - .php
+        - .php3
+        - .php4
+        - .php5
+        - .php7
+        - .pht
+        - .phtml
+        - .inc
+        - .shtml
+        - .xhtml
+        - .js
+        - .html
+        - .json
+        - .css
+
+  - check: tiny_backdoor
+    confidence: high
+    args:
+      paths:
+        - /var/netscaler/logon
+        - /var/netscaler/logon/LogonPoint
+        - /var/netscaler/logon/themes
+        - /var/vpn
+        - /var/netscaler/portal
+        - /netscaler/ns_gui/admin_ui
+        - /netscaler/ns_gui/vpn
+      max_size_kb: 64
+      extensions:
+        - .php
+        - .php3
+        - .php4
+        - .php5
+        - .php7
+        - .pht
+        - .phtml
+        - .inc
+        - .shtml
+      suspicious_patterns:
+        - regex:system\s*\(
+        - regex:shell_exec\s*\(
+        - regex:passthru\s*\(
+        - regex:(?<!\.)exec\s*\(
+        - regex:popen\s*\(
+        - regex:proc_open\s*\(
+        - regex:base64_decode\s*\(
+        - regex:assert\s*\(
+        - regex:eval\s*\(
+        - regex:preg_replace\s*\([^)]*\/e[^)]*\)
+        - regex:atob\s*\(
+        - regex:new\s+Function\s*\(
 
   - check: crontab
     confidence: high
@@ -135,6 +346,36 @@ checks:
       suspicious_bytes:
         pcap_microsecond: d4c3 b2a1
         pcap_nanosecond: 4d3c b2a1
+
+  - check: ns_conf
+    confidence: high
+    args:
+      path: /nsconfig/ns.conf
+      suspicious_patterns:
+        # Non-default theme bindings or external theme sources
+        - regex:bind\s+vpn\s+vserver\s+\S+\s+.*-portaltheme\s+(?!Default)\w+
+        - regex:add\s+vpn\s+portaltheme\s+\S+\s+.*-source\s+https?://
+        # Responder policies injecting remote content or redirects
+        - regex:add\s+responder\s+policy\s+.*https?://
+        - regex:(?s)add\s+responder\s+action\s+.*?Q\("https?://
+        # Clientless/non-default portal modes
+        - regex:set\s+vpn\s+parameter\s+.*-clientlessVpnMode\s+ON
+        # Additional rewrite/AAA pivots and toggles often abused
+        - regex:add\s+rewrite\s+(policy|action)\s+.*https?://
+        - regex:bind\s+rewrite\s+policylabel\s+\S+.*-\s*policyName\s+\S+
+        - regex:set\s+vpn\s+parameter\s+.*-forceCleanup\s+ON
+        - regex:set\s+vpn\s+vserver\s+\S+.*-clientlessAccess\s+ON
+        - regex:add\s+(lb|cs)\s+vserver\s+\S+.*-redirURL\s+https?://
+      allowlist_patterns:
+        # Common IdP endpoints likely present in SSO flows
+        - regex:https?://login\.microsoftonline\.com
+        - regex:https?://aadcdn\.msftauth\.net
+        - regex:https?://(www\.)?okta\.com
+        - regex:https?://oktastatic\.com
+        - regex:https?://(www\.)?onelogin\.com
+        - regex:https?://(www\.)?auth0\.com
+        - regex:https?://(www\.)?pingidentity\.com
+        - regex:https?://(www\.)?pingone\.com
 
   - check: core_dump
     confidence: medium

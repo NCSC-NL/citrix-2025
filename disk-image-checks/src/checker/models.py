@@ -45,11 +45,17 @@ class WebshellArgs(BaseModel):
 class SuspiciousContentCheckArgs(BaseModel):
     name: str
     suspicious_contents: list[str]
-    paths: list[str] = "/"
-    known_paths: list[str] = []
+    paths: list[str] = Field(default_factory=list)
+    known_paths: list[str] = Field(default_factory=list)
+    extensions: list[str] = Field(default_factory=list)
+    allowlist_patterns: list[str] = Field(default_factory=list)
 
     @field_validator("suspicious_contents")
     def validate_regex(cls, string):
+        return suspicious_content_validate_regex(string)
+
+    @field_validator("allowlist_patterns")
+    def validate_allowlist_regex(cls, string):
         return suspicious_content_validate_regex(string)
 
 
@@ -156,6 +162,54 @@ class MagicBytesCheck(BaseCheck):
     args: MagicBytesArgs
 
 
+class NsConfArgs(BaseModel):
+    path: str = "/nsconfig/ns.conf"
+    suspicious_patterns: list[str] = []
+    allowlist_patterns: list[str] = []
+
+    @field_validator("suspicious_patterns")
+    def validate_nsconf_regex(cls, string):
+        return suspicious_content_validate_regex(string)
+
+    @field_validator("allowlist_patterns")
+    def validate_nsconf_allowlist_regex(cls, string):
+        return suspicious_content_validate_regex(string)
+
+
+class NsConfCheck(BaseCheck):
+    check: Literal["ns_conf"] = "ns_conf"
+    args: NsConfArgs
+
+
+class RecentChangesArgs(BaseModel):
+    paths: list[str] = []
+    days: int = 90
+    extensions: list[str] = []
+
+
+class TinyBackdoorArgs(BaseModel):
+    paths: list[str] = []
+    max_size_kb: int = 2
+    extensions: list[str] = []
+    suspicious_patterns: list[str] = []
+
+    @field_validator("suspicious_patterns", mode="before")
+    @classmethod
+    def validate_regex_list(cls, v):
+        if not isinstance(v, list):
+            raise TypeError("suspicious_patterns must be list[str]")
+        return [suspicious_content_validate_regex(x) for x in v]
+
+
+class RecentChangesCheck(BaseCheck):
+    check: Literal["recent_changes"] = "recent_changes"
+    args: RecentChangesArgs
+
+
+class TinyBackdoorCheck(BaseCheck):
+    check: Literal["tiny_backdoor"] = "tiny_backdoor"
+    args: TinyBackdoorArgs
+
 ALL_CHECKS = [
     "timestomp",
     "webshell",
@@ -168,6 +222,9 @@ ALL_CHECKS = [
     "mime_type",
     "core_dump",
     "magic_bytes",
+    "ns_conf",
+    "recent_changes",
+    "tiny_backdoor",
 ]
 
 ValidCheckType = Annotated[
@@ -183,6 +240,9 @@ ValidCheckType = Annotated[
         KnownBadFilesCheck,
         CoreDumpCheck,
         MagicBytesCheck,
+        NsConfCheck,
+        RecentChangesCheck,
+        TinyBackdoorCheck,
     ],
     Field(discriminator="check"),
 ]
