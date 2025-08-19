@@ -21,6 +21,7 @@ checks:
       known_paths:
         - /var/netscaler/gui/admin_ui/
         - /var/netscaler/websocketd/
+        - /var/tmp/
       permission_confidence: medium
 
   - check: suspicious_content
@@ -32,7 +33,6 @@ checks:
             - python3 -c
             - httpd.conf
             - fnoc.dptth
-            - index.php
             - php.xedni
             - relacsten
             - zlib.decompress
@@ -117,10 +117,28 @@ checks:
         - /usr/sbin/ping6
         - /usr/sbin/userhelper
         - /usr/sbin/usernetctl
+        - /var/netscaler/ping
+        - /var/netscaler/ping6
+        - /var/netscaler/traceroute
+        - /var/netscaler/traceroute6
+        - /var/sbin/mksnap_ffs
+        - /var/sbin/shutdown
+        - /var/sbin/poweroff
+        - /var/usr/bin/crontab
+        - /var/usr/bin/lock
+        - /var/usr/bin/login
+        - /var/usr/bin/netstat
+        - /var/usr/bin/passwd
+        - /var/usr/bin/su
+        - /var/usr/libexec/ssh-keysign
       known_guid_binaries:
         - /usr/bin/netstat
         - /usr/bin/wall
         - /usr/bin/write
+        - /var/usr/bin/wall
+        - /var/usr/bin/write
+        - /var/run/nsprofmgmt.pid
+        - /var/configd_devno
 
   - check: known_bad_files
     confidence: high
