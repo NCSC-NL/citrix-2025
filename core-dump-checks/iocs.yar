@@ -153,9 +153,9 @@ rule NCSCNL_CitrixIncident2025_Mozilla50WindowsNT100Win64x64AppleWebKit53736KHTM
     meta:
         author = "NCSC-NL"
         author_url = "https://www.ncsc.nl/actueel/nieuws/2025/07/22/casus-citrix-kwetsbaarheid"
-        confidence_level = "high"
+        confidence_level = "medium"
         tlp = "CLEAR"
-        date = "2025-08-06"
+        date = "2025-08-19"
 
     strings:
         $s = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.6261.112 Safari/537.36"
@@ -269,13 +269,13 @@ rule NCSCNL_CitrixIncident2025_vartmpsh {
         any of them
 }
 
-rule NCSCNL_CitrixIncident2025_1245184 {
+rule NCSCNL_CitrixIncident2025_HUNTING_1245184 {
     meta:
         author = "NCSC-NL"
         author_url = "https://www.ncsc.nl/actueel/nieuws/2025/07/22/casus-citrix-kwetsbaarheid"
         confidence_level = "medium"
         tlp = "CLEAR"
-        date = "2025-08-06"
+        date = "2025-08-19"
 
     strings:
         $s = "1245184"
@@ -464,13 +464,13 @@ rule NCSCNL_CitrixIncident2025_nsrootactions {
         any of them
 }
 
-rule NCSCNL_CitrixIncident2025_nfauthdoDialoguedo {
+rule NCSCNL_CitrixIncident2025_HUNTING_nfauthdoDialoguedo {
     meta:
         author = "NCSC-NL"
         author_url = "https://www.ncsc.nl/actueel/nieuws/2025/07/22/casus-citrix-kwetsbaarheid"
-        confidence_level = "medium"
+        confidence_level = "low"
         tlp = "CLEAR"
-        date = "2025-08-06"
+        date = "2025-08-19"
 
     strings:
         $s = "/nf/auth/doDialogue.do"
