@@ -5,13 +5,13 @@
 Python script to check citrix images for IOCs. Based on https://github.com/fox-it/citrix-netscaler-triage/blob/main/iocitrix.py.
 
 ## Creating Citrix NetScaler disk images
-Before you can run the checker you must first create disk images of your netscaler appliance(s).
+Before you can run the checker you must first create disk images of your NetScaler instance(s).
 
-### Non VPX/SDX/MPX disk images
-You can use native disk exports/memory snapshots from Hyper-V, Proxmox, VMware solutions.
+### NetScaler VPX (virtual machine) disk images
+You can use native virtual disk exports/memory snapshots from Microsoft Hyper-V, Proxmox, XenServer or VMware ESXi solutions.
 However you can still use the method described in the next section to create an image.
 
-### VPX/SDX/MPX disk images
+### NetScaler MPX (bare-metal/non-virtualized) disk images
 A Citrix NetScaler exposes two important block devices which can imaged for offline forensic analysis. These block device files can be found at the following paths:
 * `/dev/md0`: The disk that holds the root (`/`) directory. This is a RAM disk
 * `/dev/da0`: The disk that holds the `/var` and `/flash` directories. This is a persistent disk.
