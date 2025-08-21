@@ -127,7 +127,6 @@ checks:
         - /var/usr/bin/crontab
         - /var/usr/bin/lock
         - /var/usr/bin/login
-        - /var/usr/bin/netstat
         - /var/usr/bin/passwd
         - /var/usr/bin/su
         - /var/usr/libexec/ssh-keysign
@@ -135,9 +134,11 @@ checks:
         - /usr/bin/netstat
         - /usr/bin/wall
         - /usr/bin/write
+        - /var/usr/bin/netstat
         - /var/usr/bin/wall
         - /var/usr/bin/write
         - /var/run/nsprofmgmt.pid
+        - /var/run/nsmap.pid
         - /var/configd_devno
 
   - check: known_bad_files
