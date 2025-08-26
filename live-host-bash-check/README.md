@@ -1,4 +1,5 @@
 # Webshell Detection Script for Citrix NetScaler appliances
+## This script is not specific to CVE-2025-6543.
 ## Author: NCSC-NL
 
 ### Disclaimer
