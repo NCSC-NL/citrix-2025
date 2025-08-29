@@ -1,10 +1,8 @@
 # Detection Script for Citrix NetScaler appliances
 ## Author: NCSC-NL
-> [!WARNING]
-> It is known that certain guid and suid binaries are not filtered correctly on ram disks. This may result in false positives. We are working on the issue.
 
 > [!WARNING]
-> Some of these checks are meant to hunt for compromises, while other checks verify if you are compromised. We are working on seperating hunting from compromise checks.
+> Some of these checks are meant to hunt for compromises, while other checks verify if you are compromised. 
 
 ### Disclaimer
 These scripts are provided without any guarantees regarding its effectiveness.  
