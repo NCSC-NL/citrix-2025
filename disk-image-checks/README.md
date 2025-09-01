@@ -94,6 +94,32 @@ Run all checks on an image
 Run with only the webshells check
 `uv run run-checks images/image.ovf --checks webshell`
 
+### Using `uv` on windows
+Python 3.12 is required to run this project. On Windows you can install it with:
+
+```powershell
+winget install -e --id Python.Python.3.12
+```
+
+After installing Python on Windows, close and reopen your Command Prompt or PowerShell (or open a new terminal window) so the PATH changes take effect.
+
+Now install the yara-python module. Open Command Prompt or PowerShell and run:
+
+```powershell
+pip install yara-python
+```
+
+Read how to install `uv` [here](https://docs.astral.sh/uv/getting-started/installation/).
+
+Clone the repo, and run
+  - `cd disk-image-checks`
+  - `uv venv; .\.venv\Scripts\Activate.ps1; uv sync --frozen`
+  - `uv run run-checks -h`
+
+#### Example on windows
+Run all checks on an image
+`uv run run-checks "c:\Temp\NSVPX-ESX-13.1.ovf"`
+
 ### 'plain' python
 (optional) create a venv (python3.12):
 - `cd disk-image-checks`
