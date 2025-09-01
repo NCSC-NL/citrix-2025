@@ -478,3 +478,31 @@ rule NCSCNL_CitrixIncident2025_HUNTING_nfauthdoDialoguedo {
     condition:
         any of them
 }
+
+rule NCSCNL_CitrixIncident2025_ropchain {
+    meta:
+        author = "NCSC-NL"
+        author_url = "https://www.ncsc.nl/actueel/nieuws/2025/07/22/casus-citrix-kwetsbaarheid"
+        confidence_level = "high"
+        tlp = "CLEAR"
+        date = "2025-09-01"
+
+    strings:
+        $s = { 
+            ?? ?? ?? 00 00 00 00 00 
+            ?? ?? ?? 01 00 00 00 00
+            ?? ?? ?? 00 00 00 00 00
+            ?? ?? ?? 03 00 00 00 00
+            ?? ?? ?? 00 00 00 00 00
+            ?? ?? ?? 03 00 00 00 00
+            ?? ?? ?? 01 00 00 00 00
+            ?? ?? ?? 0? 00 00 00 00
+            ?? ?? ?? ?? 00 00 00 00
+            ?? ?? ?? ?? 00 00 00 00
+            ?? ?? ?? ?? 00 00 00 00
+            ?? ?? ?? ?? ?? ?? ?? ??
+        }
+    
+    condition:
+        any of them
+}
