@@ -5,6 +5,8 @@
 
 Scan Citrix NetScaler core dump file(s) for IOCs related to CVE-2025-5349, CVE-2025-5777 and CVE-2025-6543.
 
+See the [Create Citrix Core Dump Guide](COREDUMP.md) for step-by-step instructions on generating one.
+
 ## Instructions
 It is highly recommended to use UV to run the script. More info on what UV is here: https://docs.astral.sh/uv/
 
